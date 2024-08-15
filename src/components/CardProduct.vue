@@ -45,6 +45,10 @@ export default {
 </script>
   
 <style scoped lang="scss">
+*{
+  font-weight: 600;
+}
+
 .card-product {
   margin-top: 30px;
   padding-top: 25px;
@@ -68,7 +72,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   background: #ffffff;
-  border: 1px solid #000000;
+  border: 1px solid #148f77;
   border-radius: 15px;
 }
 
@@ -86,7 +90,7 @@ export default {
   height: 51px;
   background: #1abc9c;
   border-radius: 15px 0px 0px 15px;
-  border: 1px solid #000000;
+  border: 1px solid #148f77;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +106,7 @@ export default {
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  border: 1px solid #000000;
+  border: 1px solid #148f77;
   border-radius: 0px 15px 15px 0px;
 }
 
@@ -116,7 +120,7 @@ export default {
   justify-content: center;
   flex-direction: row;
   background: #ffffff;
-  border: 1px solid #000000;
+  border: 1px solid #148f77;
   border-radius: 15px;
   font-size: medium;
 }

@@ -2,11 +2,14 @@
   <v-card class="new-person">
     <v-form class="input-person">
       <v-text-field 
+      variant="plain"
       v-model="person.name" 
       placeholder="Введите имя" 
+      density="compact"
       class="name" />
       <v-btn 
       text="Добавить"
+      id = "name-btn"
       class="btn" 
       @click="addPerson"/> 
     </v-form>
@@ -20,8 +23,7 @@
         <v-btn 
         block 
         text="Удалить"
-        rounded="lg" 
-        class="btn" 
+        class="btn"
         @click="personsStore.deletePerson(person)"/>
       </div>
     </div>
@@ -61,25 +63,40 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
 .input-person {
-  margin: 0;
-  width: 401px;
-  height: 50px;
+  width: 100%;
+  max-height: 50px;
   display: flex;
   align-items: center;
-  flex-direction: row;
 }
 
 .btn {
-  height: 100%;
-
+  margin: 0px;
+  width: 105px;
+  min-height: 50px;
+  font-weight: 600;
+  border-radius: 0px 15px 15px 0px;
+  border: 1px solid #148f77;
   &:hover {
     background: #eafaf1;
   }
 }
 
+#name-btn {
+  color:#ffffff;
+  background-color: #148f77;
+  
+}
+
 .name {
-  height: 100%;
+  padding-top: 5px;
+  padding-left: 10px;
+  width: 295px;
+  max-height: 50px;
+  border-radius: 15px 0px 0px 15px;
+  border: 1px solid #148f77;
 }
 
 .name-list {
@@ -96,8 +113,11 @@ export default {
   align-items: center;
   text-align: center;
   background: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 15px;
+  border: 1px solid #148f77;
+  border-radius: 15px 0px 0px 15px;
   font-family: Arial;
 }
+
+
+
 </style>
