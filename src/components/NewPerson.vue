@@ -1,5 +1,5 @@
 <template>
-  <v-card class="new-person">
+  <div class="new-person">
     <v-form class="input-person">
       <v-text-field 
       variant="plain"
@@ -27,7 +27,7 @@
         @click="personsStore.deletePerson(person)"/>
       </div>
     </div>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -63,7 +63,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.new-person{
+  height: 100%;
+  background-color: #eafaf1;
+}
 
 .input-person {
   width: 100%;
