@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import CardList from "@/components/CardList.vue";
-import NewPerson from "@/components/DialogWindows/NewPerson.vue";
-import NewProduct from "@/components/DialogWindows/NewProduct.vue";
-import TotalAmount from "@/components/DialogWindows/TotalAmount.vue";
+import CardList from "../components/CardList.vue";
+import NewPerson from "../components/NewPerson.vue";
+import NewProduct from "../components/NewProduct.vue";
+import TotalAmount from "../components/TotalAmount.vue";
 export default {
   components: {
     NewPerson,

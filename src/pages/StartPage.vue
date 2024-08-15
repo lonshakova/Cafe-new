@@ -1,6 +1,6 @@
 <template>
   <div class="start-page" justify-center>
-    <v-btn class="btn" size="x-large" @click="$router.push('/main')">Начнём</v-btn>
+    <!-- <v-btn class="btn" size="x-large" @click="/*$router.push('/main')*/">Начнём</v-btn> -->
   </div>
 </template>
 

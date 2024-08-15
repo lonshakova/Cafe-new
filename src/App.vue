@@ -1,8 +1,12 @@
 <template>
   <v-app id="app">
-    <router-view></router-view>
+    <MainPage />
   </v-app>
 </template>
+
+<script>
+  import MainPage from './pages/MainPage.vue';
+</script>
 
 <style lang=scss>
 * {
