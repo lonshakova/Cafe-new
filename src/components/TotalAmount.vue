@@ -3,7 +3,6 @@
     <div class="amount">
       СУММА: <span style="color: #186a3b">{{ amount }}</span>
     </div>
-    <v-list>
       <v-list-item v-for="person in personsStore.persons" :key="person.id">
         <v-list-item v-for="creditor in person.creditors" :key="creditor.id">
           <div class="persons">
@@ -11,7 +10,6 @@
           </div>
         </v-list-item>
       </v-list-item>
-    </v-list>
     <v-btn 
     text="Убрать повторения"
     @click="personsStore.removeRepetitions()"
@@ -38,8 +36,9 @@ export default {
 
 <style scoped lang="scss">
 .total-amount {
-  margin: 10px;
+  padding: 10px;
   text-align: center;
+  background: #eafaf1;
 }
 
 .amount {
@@ -52,16 +51,17 @@ export default {
 .persons {
   min-width: 250px;
   height: 50px;
-  background: #eafaf1;
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  border: 1px solid black;
+  border: 1px solid #148f77;
   border-radius: 15px;
 }
 
 .btn:hover {
-  background: #eafaf1;
+  background: #148f77;
+  color:#ffffff;
 }
 </style>

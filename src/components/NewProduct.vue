@@ -2,22 +2,24 @@
   <div class="new-product">
     <v-form class="input-product">
       <v-text-field 
+      variant="plain"
       v-model="product.name" 
+      density="comfortable"
       class="input" 
       placeholder="Введите название" />
       <v-text-field 
+      variant="plain"
       type="number" 
+      density="comfortable"
       v-model="product.cost" 
       class="input" 
       placeholder="Введите цену" />
-      
     </v-form>
     <div class="users">
       <div>
         <div class="question">Кто платил?</div>
-        <v-list>
           <v-radio-group v-model="product.payer">
-            <v-list-item 
+            <div 
             v-for="person in personsStore.persons" 
             :key="person.id" 
             :value="person">
@@ -25,16 +27,12 @@
               :label="person.name" 
               :value="person" 
               class="payer" />
-            </v-list-item>
+            </div>
           </v-radio-group>
-        </v-list>
       </div>
-
       <div>
         <div class="question">Кто ел/пил?</div>
-        <v-list>
-          <v-container>
-            <v-list-item 
+            <div
             v-for="person in personsStore.persons" 
             :key="person.id" 
             :value="person">
@@ -43,9 +41,7 @@
               :value="person" 
               class="payer" 
               v-model="product.eaters" />
-            </v-list-item>
-          </v-container>
-        </v-list>
+        </div>
       </div>
     </div>
     <div style="display: flex; justify-content: flex-end">
@@ -103,6 +99,7 @@ export default {
 <style scoped lang="scss">
 .new-product {
   width: 785px;
+  background-color: #eafaf1;
 }
 
 .input-product {
@@ -117,16 +114,22 @@ export default {
 
 .input {
   margin: 0px 10px;
+  padding-left: 10px;
   width: 100px;
+  background: #ffffff;
+  max-height: 50px;
+  border-radius: 15px;
+  border: 1px solid #148f77;
 }
 
 .btn {
   margin: 20px;
   width: 140px;
   height: 50px;
-
+  background: #ffffff;
   &:hover {
-    background: #eafaf1;
+    background: #148f77;
+    color:#ffffff;
   }
 }
 
@@ -147,8 +150,8 @@ export default {
   height: 50px;
   width: 150px;
   border: 1px solid #148f77;
-  border-radius: 15px;
   background: #ffffff;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;

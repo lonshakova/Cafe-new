@@ -5,7 +5,7 @@
       variant="plain"
       v-model="person.name" 
       placeholder="Введите имя" 
-      density="compact"
+      density="comfortable"
       class="name" />
       <v-btn 
       text="Добавить"
@@ -64,7 +64,9 @@ export default {
 
 <style scoped lang="scss">
 .new-person{
+  padding: 20px;
   height: 100%;
+  width: 100%;
   background-color: #eafaf1;
 }
 
@@ -73,6 +75,7 @@ export default {
   max-height: 50px;
   display: flex;
   align-items: center;
+  
 }
 
 .btn {
@@ -89,14 +92,13 @@ export default {
 
 #name-btn {
   color:#ffffff;
-  background-color: #148f77;
-  
+  background: #148f77;
 }
 
 .name {
-  padding-top: 5px;
   padding-left: 10px;
   width: 295px;
+  background: #ffffff;
   max-height: 50px;
   border-radius: 15px 0px 0px 15px;
   border: 1px solid #148f77;

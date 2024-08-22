@@ -23,6 +23,7 @@
           <v-dialog
             v-model="NewPersonVisible"
             width="auto"
+            backgroung-color="#eafaf1"
             height="500px"
             scrollable>
             <template v-slot:activator="{ props }">
@@ -33,9 +34,7 @@
               >
             </template>
             <v-card>
-              <v-card-text>
                 <new-person />
-              </v-card-text>
             </v-card>
           </v-dialog>
           <v-dialog
