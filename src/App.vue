@@ -20,6 +20,6 @@
   box-sizing: border-box;
 }
 #app {
-  padding: 20px;
+  padding: 0px;
 }
 </style>

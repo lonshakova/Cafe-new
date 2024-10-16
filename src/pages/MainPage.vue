@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <v-main>
+    
+    <v-bar>
+      <SideMenu />
       <v-container class="btn-box">
         <v-row
           justify="space-around"
@@ -52,22 +54,10 @@
               <total-amount />
             </v-card>
           </v-dialog>
-          <v-dialog
-            v-model="GoOutVisible"
-            width="auto"
-            scrollable>
-            <template v-slot:activator="{ props }">
-              <v-btn
-                v-bind="props"
-                >Выход</v-btn
-              >
-            </template>
-            <v-card>
-              <GoOut />
-            </v-card>
-          </v-dialog>
         </v-row>
       </v-container>
+    </v-bar>
+    <v-main>
       <card-list />
     </v-main>
   </v-app>
@@ -78,27 +68,31 @@
   import NewPerson from "../components/NewPerson.vue";
   import NewProduct from "../components/NewProduct.vue";
   import TotalAmount from "../components/TotalAmount.vue";
-  import GoOut from "../components/GoOut.vue"
+  import SideMenu from "../components/SideMenu.vue";
   export default {
     components: {
       NewPerson,
       NewProduct,
       TotalAmount,
       CardList,
-      GoOut,
+      SideMenu
     },
     data() {
       return {
         NewProductVisible: false,
         NewPersonVisible: false,
         TotalAmountVisible: false,
-        GoOutVisible: false,
       };
     },
   };
 </script>
 
 <style scoped lang="scss">
+v-bar {
+  margin: 20px;
+  display: flex;
+}
+
 .btn-box{
   width: 100%;
   height: 90px;
