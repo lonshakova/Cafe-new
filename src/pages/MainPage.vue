@@ -52,6 +52,20 @@
               <total-amount />
             </v-card>
           </v-dialog>
+          <v-dialog
+            v-model="GoOutVisible"
+            width="auto"
+            scrollable>
+            <template v-slot:activator="{ props }">
+              <v-btn
+                v-bind="props"
+                >Выход</v-btn
+              >
+            </template>
+            <v-card>
+              <GoOut />
+            </v-card>
+          </v-dialog>
         </v-row>
       </v-container>
       <card-list />
@@ -64,18 +78,21 @@
   import NewPerson from "../components/NewPerson.vue";
   import NewProduct from "../components/NewProduct.vue";
   import TotalAmount from "../components/TotalAmount.vue";
+  import GoOut from "../components/GoOut.vue"
   export default {
     components: {
       NewPerson,
       NewProduct,
       TotalAmount,
       CardList,
+      GoOut,
     },
     data() {
       return {
         NewProductVisible: false,
         NewPersonVisible: false,
         TotalAmountVisible: false,
+        GoOutVisible: false,
       };
     },
   };
