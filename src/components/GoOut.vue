@@ -1,18 +1,25 @@
 <template>
-  <div class="main-window">
-    <div class="text">Подтвердите выход</div>
-    <div class="btns">
-      <v-btn class="btn" >Остаться</v-btn>
-      <v-btn  class="btn" @click="$router.push('/')">Выход</v-btn>
-    </div>
-    
-  </div>
+  <v-dialog v-model="GoOutVisible" width="auto" scrollable>
+    <template v-slot:activator="{ props }">
+      <v-btn v-bind="props" variant="tonal">Выход</v-btn>
+    </template>
+    <v-card>
+      <div class="main-window">
+        <div class="text">Подтвердите выход</div>
+        <div class="btns">
+          <v-btn class="btn">Остаться</v-btn>
+          <v-btn class="btn" @click="$router.push('/')">Выход</v-btn>
+        </div>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script>
-  export default {
-    
-  }
+<script setup>
+import { ref } from 'vue';
+
+let GoOutVisible = ref(false);
+
 </script>
 
 <style lang="scss" scoped>

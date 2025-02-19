@@ -4,21 +4,14 @@
       variant="title"
       class="icon"
       @click.stop="isVisible = !isVisible"
-    ></v-app-bar-nav-icon>
+    />
     <v-navigation-drawer v-model="isVisible" class="side-menu">
       <v-app-bar-nav-icon
         variant="title"
         @click.stop="isVisible = !isVisible"
-      ></v-app-bar-nav-icon>
+      />
       <v-btn icon="mdi-plus" variant="title" />
-      <v-dialog v-model="GoOutVisible" width="auto" scrollable>
-        <template v-slot:activator="{ props }">
-          <v-btn v-bind="props" variant="tonal">Выход</v-btn>
-        </template>
-        <v-card>
-          <GoOut />
-        </v-card>
-      </v-dialog>
+      <GoOut />
       <v-list class="checks">
         <v-list-item
           v-for="check in checks"
@@ -41,7 +34,6 @@
 import { ref } from "vue";
 import GoOut from "../components/GoOut.vue";
 
-let GoOutVisible = ref(false);
 let isVisible = ref(false);
 let checks = ref([
   { title: "My Files", id: 1 },
