@@ -1,20 +1,22 @@
 <template>
   <div>
     <v-app-bar-nav-icon
-      variant="title"
+      variant="text"
       class="icon"
       @click.stop="isVisible = !isVisible"
     />
     <v-navigation-drawer v-model="isVisible" class="side-menu">
-      <v-app-bar-nav-icon
-        variant="title"
+      <div class="top">
+        <v-app-bar-nav-icon
+        variant="text"
         @click.stop="isVisible = !isVisible"
       />
-      <v-btn icon="mdi-plus" variant="title" />
+      <NewCheck />
       <GoOut />
+      </div>
       <v-list class="checks">
         <v-list-item
-          v-for="check in checks"
+          v-for="check in productStore.checks"
           :value="check"
           :key="check.id"
           class="check"
@@ -23,7 +25,7 @@
           <template v-slot:append>
             <v-icon icon="mdi-close" @click="deleteItem(check.id)" />
           </template>
-          {{ check.title }}
+          {{ check.name }}
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -33,31 +35,35 @@
 <script setup>
 import { ref } from "vue";
 import GoOut from "../components/GoOut.vue";
+import NewCheck from "./NewCheck.vue";
+import { useProductsStore } from "../stores/productStore";
+
+const productStore = useProductsStore();
 
 let isVisible = ref(false);
-let checks = ref([
-  { title: "My Files", id: 1 },
-  { title: "Shared with me", id: 2 },
-  { title: "Starred", id: 3 },
-  { title: "Recent", id: 4 },
-  { title: "Offline", id: 5 },
-  { title: "Uploads", id: 6 },
-  { title: "Backups", id: 7 },
-]);
 
 function deleteItem(id) {
-  checks.value = checks.value.filter((p) => p.id !== i);
+  productStore.checks = productStore.checks.filter((p) => p.id !== id);
 }
+
+
 </script>
 
 <style lang="scss" scoped>
 .side-menu {
   padding: 31px 10px;
   background-color: #1abc9c;
+
 }
 
 .icon {
   margin: 10px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .check {

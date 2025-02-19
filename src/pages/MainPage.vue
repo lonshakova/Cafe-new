@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    
     <v-bar>
       <SideMenu />
       <v-container class="btn-box">
