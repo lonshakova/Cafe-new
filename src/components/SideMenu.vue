@@ -21,6 +21,7 @@
           :key="check.id"
           class="check"
           color="#148F77"
+          @click="$router.push(`/main/${check.id}`)"
         >
           <template v-slot:append>
             <v-icon icon="mdi-close" @click="deleteItem(check.id)" />
@@ -53,7 +54,6 @@ function deleteItem(id) {
 .side-menu {
   padding: 31px 10px;
   background-color: #1abc9c;
-
 }
 
 .icon {

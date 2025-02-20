@@ -1,102 +1,118 @@
 <template>
-  <div class="new-product">
-    <v-form class="input-product">
-      <v-text-field 
-      variant="plain"
-      v-model="product.name" 
-      density="comfortable"
-      class="input" 
-      placeholder="Введите название" />
-      <v-text-field 
-      variant="plain"
-      type="number" 
-      density="comfortable"
-      v-model="product.cost" 
-      class="input" 
-      placeholder="Введите цену" />
-    </v-form>
-    <div class="users">
-      <div>
-        <div class="question">Кто платил?</div>
-          <v-radio-group v-model="product.payer">
-            <div 
-            v-for="person in personsStore.persons" 
-            :key="person.id" 
-            :value="person">
-              <v-radio 
-              :label="person.name" 
-              :value="person" 
-              class="payer" />
-            </div>
-          </v-radio-group>
-      </div>
-      <div>
-        <div class="question">Кто ел/пил?</div>
+  <v-dialog v-model="isVisible" width="auto" scrollable>
+    <template v-slot:activator="{ props }">
+      <v-btn v-bind="props" class="main-btn">Добавить продукт</v-btn>
+    </template>
+    <v-card>
+      <div class="new-product">
+        <v-form class="input-product">
+          <v-text-field
+            variant="plain"
+            v-model="product.name"
+            density="comfortable"
+            class="input"
+            placeholder="Введите название"
+          />
+          <v-text-field
+            variant="plain"
+            type="number"
+            density="comfortable"
+            v-model="product.cost"
+            class="input"
+            placeholder="Введите цену"
+          />
+        </v-form>
+        <div class="users">
+          <div>
+            <div class="question">Кто платил?</div>
+            <v-radio-group v-model="product.payer">
+              <div
+                v-for="person in personsStore.persons"
+                :key="person.id"
+                :value="person"
+              >
+                <v-radio :label="person.name" :value="person" class="payer" />
+              </div>
+            </v-radio-group>
+          </div>
+          <div>
+            <div class="question">Кто ел/пил?</div>
             <div
-            v-for="person in personsStore.persons" 
-            :key="person.id" 
-            :value="person">
-              <v-checkbox 
-              :label="person.name" 
-              :value="person" 
-              class="payer" 
-              v-model="product.eaters" />
+              v-for="person in personsStore.persons"
+              :key="person.id"
+              :value="person"
+            >
+              <v-checkbox
+                :label="person.name"
+                :value="person"
+                class="payer"
+                v-model="product.eaters"
+              />
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end">
+          <v-btn
+            text="Добавить"
+            class="btn"
+            @click="createCard"
+            :disabled="formIsEmpty"
+          />
         </div>
       </div>
-    </div>
-    <div style="display: flex; justify-content: flex-end">
-      <v-btn 
-      text="Добавить"
-      class="btn" 
-      @click="createCard" 
-      :disabled="formIsEmpty"/>
-    </div>
-  </div>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script>
+<script setup>
 import { usePersonsStore } from "../stores/personsStore";
 import { useProductsStore } from "../stores/productStore";
-export default {
-  setup() {
-    const personsStore = usePersonsStore();
-    const productStore = useProductsStore();
-    return {
-      personsStore,
-      productStore
-    }
-  },
-  data() {
-    return {
-      product: {
-        name: "",
-        cost: "",
-        payer: "",
-        eaters: [],
-      },
-    };
-  },
-  methods: {
-    createCard() {
-      this.product.id = Date.now();
-      this.productStore.createCard(this.product);
-      this.product = {
-        name: "",
-        cost: "",
-        payer: "",
-        eaters: [],
-      };
-    },
-  },
-  computed: {
-    formIsEmpty() {
-      return (this.product.name === '' || this.product.cost === '' || this.product.payer === '' || this.product.eaters.length === 0)
-    }
-  }
-};
+import { ref, computed } from "vue";
+const personsStore = usePersonsStore();
+const productStore = useProductsStore();
+
+let isVisible = ref(false);
+let product = ref({
+  name: "",
+  cost: "",
+  payer: "",
+  eaters: [],
+});
+
+let formIsEmpty = computed(() => {
+  return (
+    product.value.name === "" ||
+    product.value.cost === "" ||
+    product.value.payer === "" ||
+    product.value.eaters.length === 0
+  );
+});
+
+function createCard() {
+  product.value.id = Date.now();
+  productStore.createCard(product.value);
+  product.value = {
+    name: "",
+    cost: "",
+    payer: "",
+    eaters: [],
+  };
+}
 </script>
 
 <style scoped lang="scss">
+.main-btn {
+  width: 300px;
+  min-height: 70px;
+  font-weight: 600;
+  font-size: 17px;
+  border: 1px #148f77 solid;
+  border-radius: 15px;
+  &:hover {
+    background: #eafaf1;
+  }
+}
+
 .new-product {
   width: 785px;
   background-color: #eafaf1;
@@ -129,7 +145,7 @@ export default {
   background: #ffffff;
   &:hover {
     background: #148f77;
-    color:#ffffff;
+    color: #ffffff;
   }
 }
 

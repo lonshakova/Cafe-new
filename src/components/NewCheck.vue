@@ -28,6 +28,7 @@
 import { ref } from "vue";
 import { useProductsStore } from "../stores/productStore";
 
+
 const productStore = useProductsStore();
 
 const isVisible = ref(false);
@@ -37,7 +38,7 @@ function addnewCheck() {
   check.value.id = Date.now();
   productStore.checks.push(check.value);
   check.value = { name: "", id: null, products: [], persons: [] };
-  isVisible.value = false
+  isVisible.value = false;
 }
 </script>
 

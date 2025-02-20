@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="card-list">
       <transition-group 
       name="card-list" 
@@ -8,23 +7,13 @@
         <card-product :product="product" :key="product.id" />
       </transition-group>
     </div>
-  </div>
 </template>
   
-<script>
+<script setup>
 import CardProduct from "./CardProduct.vue";
 import { useProductsStore } from "../stores/productStore";
-export default {
-  setup() {
-    const productStore = useProductsStore();
-    return {
-      productStore
-    }
-  },
-  components: {
-    CardProduct,
-  },
-};
+
+const productStore = useProductsStore();
 </script>
   
 <style scoped>

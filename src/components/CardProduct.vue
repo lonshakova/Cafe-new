@@ -26,22 +26,13 @@
   </div>
 </template>
   
-<script>
+<script setup>
 import { useProductsStore } from "../stores/productStore";
-export default {
-  setup() {
-    const productStore = useProductsStore();
-    return {
-      productStore
-    }
-  },
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+import { defineProps } from "vue";
+
+const productStore = useProductsStore();
+const props = defineProps({product:{type:Object, required:true}})
+
 </script>
   
 <style scoped lang="scss">

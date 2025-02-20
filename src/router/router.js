@@ -12,6 +12,10 @@ const routes = [
     component: MainPage
   }, 
   {
+    path: '/main/:id',
+    component: MainPage
+  },
+  {
     path: '/registration',
     component: RegistrationPage
   }, 

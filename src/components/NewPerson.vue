@@ -1,69 +1,85 @@
 <template>
-  <div class="new-person">
-    <v-form class="input-person">
-      <v-text-field 
-      variant="plain"
-      v-model="person.name" 
-      placeholder="Введите имя" 
-      density="comfortable"
-      class="name" />
-      <v-btn 
-      text="Добавить"
-      id = "name-btn"
-      class="btn" 
-      @click="addPerson"/> 
-    </v-form>
-    <div 
-    lines 
-    class="name-list" 
-    v-for="person in personsStore.persons" 
-    :key="person.id">
-      <v-list-item class="names">{{ person.name }}</v-list-item>
-      <div>
-        <v-btn 
-        block 
-        text="Удалить"
-        class="btn"
-        @click="personsStore.deletePerson(person)"/>
+  <v-dialog
+    v-model="isVisible"
+    width="auto"
+    backgroung-color="#eafaf1"
+    height="500px"
+    scrollable
+  >
+    <template v-slot:activator="{ props }">
+      <v-btn v-bind="props" class="main-btn">Добавить человека</v-btn>
+    </template>
+    <v-card>
+      <div class="new-person">
+        <v-form class="input-person">
+          <v-text-field
+            variant="plain"
+            v-model="person.name"
+            placeholder="Введите имя"
+            density="comfortable"
+            class="name"
+          />
+          <v-btn text="Добавить" id="name-btn" class="btn" @click="addPerson" />
+        </v-form>
+        <div
+          lines
+          class="name-list"
+          v-for="person in personsStore.persons"
+          :key="person.id"
+        >
+          <v-list-item class="names">{{ person.name }}</v-list-item>
+          <div>
+            <v-btn
+              block
+              text="Удалить"
+              class="btn"
+              @click="personsStore.deletePerson(person)"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script>
+<script setup>
 import { usePersonsStore } from "../stores/personsStore";
-export default {
-  setup() {
-    const personsStore = usePersonsStore();
-    return {
-      personsStore,
-    }
-  },
-  data() {
-    return {
-      person: {
+import { ref } from "vue";
+
+const personsStore = usePersonsStore();
+
+let isVisible = ref(false);
+let person = ref({
+  name: "",
+  wastes: 0,
+  creditors: [],
+});
+
+function addPerson() {
+      person.value.id = Date.now();
+      personsStore.addPerson(person.value);
+      person.value = {
         name: "",
         wastes: 0,
-        creditors: []
-      },
-    };
-  },
-  methods: {
-    addPerson() {
-      this.person.id = Date.now();
-      this.personsStore.addPerson(this.person);
-      this.person = {
-        name: "",
-        wastes: 0,
-        creditors: []
+        creditors: [],
       };
-    },
-  }
-};
+    }
 </script>
 
 <style scoped lang="scss">
-.new-person{
+.main-btn {
+  width: 300px;
+  min-height: 70px;
+  font-weight: 600;
+  font-size: 17px;
+  border: 1px #148f77 solid;
+  border-radius: 15px;
+  &:hover {
+    background: #eafaf1;
+  }
+}
+
+.new-person {
   padding: 20px;
   height: 100%;
   width: 100%;
@@ -75,7 +91,6 @@ export default {
   max-height: 50px;
   display: flex;
   align-items: center;
-  
 }
 
 .btn {
@@ -91,7 +106,7 @@ export default {
 }
 
 #name-btn {
-  color:#ffffff;
+  color: #ffffff;
   background: #148f77;
 }
 
@@ -122,7 +137,4 @@ export default {
   border-radius: 15px 0px 0px 15px;
   font-family: Arial;
 }
-
-
-
 </style>
