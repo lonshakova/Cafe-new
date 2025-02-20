@@ -12,7 +12,8 @@
         @click.stop="isVisible = !isVisible"
       />
       <NewCheck />
-      <GoOut />
+      <GoOut v-if="usersStore.isEntered"/> 
+      <v-btn v-else class="btn" @click="$router.push('/login')" variant="flat">Вход</v-btn>
       </div>
       <v-list class="checks">
         <v-list-item
@@ -21,7 +22,7 @@
           :key="check.id"
           class="check"
           color="#148F77"
-          @click="$router.push(`/main/${check.id}`)"
+          @click="$router.push(`/${check.id}`)"
         >
           <template v-slot:append>
             <v-icon icon="mdi-close" @click="deleteItem(check.id)" />
@@ -38,8 +39,10 @@ import { ref } from "vue";
 import GoOut from "../components/GoOut.vue";
 import NewCheck from "./NewCheck.vue";
 import { useProductsStore } from "../stores/productStore";
+import { useUsersStore } from "../stores/usersStore";
 
 const productStore = useProductsStore();
+const usersStore = useUsersStore();
 
 let isVisible = ref(false);
 
@@ -58,6 +61,11 @@ function deleteItem(id) {
 
 .icon {
   margin: 10px;
+}
+
+.btn {
+  border: 1px #148f77 solid;
+  border-radius: 10px;
 }
 
 .top {

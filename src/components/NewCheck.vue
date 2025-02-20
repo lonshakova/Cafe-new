@@ -1,5 +1,4 @@
 <template>
-  <div>
     <v-dialog v-model="isVisible" width="auto" scrollable>
       <template v-slot:activator="{ props }">
         <v-btn icon="mdi-plus" variant="text" v-bind="props" />
@@ -8,7 +7,8 @@
         <v-card-title>Добавить новый чек</v-card-title>
         <v-form class="input-name">
           <v-text-field
-            variant="plain"
+            variant="solo"
+            flat="true"
             v-model="check.name"
             density="comfortable"
             class="input"
@@ -21,7 +21,6 @@
         </div>
       </v-card>
     </v-dialog>
-  </div>
 </template>
 
 <script setup>
@@ -38,7 +37,7 @@ const check = ref({ name: "", id: null, products: [], persons: [] });
 function addnewCheck() {
   check.value.id = Date.now();
   productStore.checks.push(check.value);
-  router.push(`/main/${check.value.id}`);
+  router.push(`/${check.value.id}`);
   check.value = { name: "", id: null, products: [], persons: [] };
   isVisible.value = false;
 }
@@ -58,8 +57,7 @@ function addnewCheck() {
 }
 
 .input {
-  margin: 10px;
-  padding-left: 10px;
+  margin: 10px 0px;
   min-width: 18vw;
   background: #ffffff;
   max-height: 50px;

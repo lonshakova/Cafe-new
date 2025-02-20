@@ -13,7 +13,8 @@
       <div class="new-person">
         <v-form class="input-person">
           <v-text-field
-            variant="plain"
+            variant="solo"
+            flat="true"
             v-model="person.name"
             placeholder="Введите имя"
             density="comfortable"

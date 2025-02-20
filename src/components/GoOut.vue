@@ -8,7 +8,7 @@
         <div class="text">Подтвердите выход</div>
         <div class="btns">
           <v-btn class="btn"  @click="isVisible=false">Остаться</v-btn>
-          <v-btn class="btn" @click="$router.push('/')">Выход</v-btn>
+          <v-btn class="btn" @click="usersStore.goOut()">Выход</v-btn>
         </div>
       </div>
     </v-card>
@@ -17,9 +17,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useUsersStore } from '../stores/usersStore';
+
+const usersStore = useUsersStore();
 
 let isVisible = ref(false);
-
 </script>
 
 <style lang="scss" scoped>

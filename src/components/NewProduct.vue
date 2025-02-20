@@ -7,14 +7,16 @@
       <div class="new-product">
         <v-form class="input-product">
           <v-text-field
-            variant="plain"
+            variant="solo"
+            flat="true"
             v-model="product.name"
             density="comfortable"
             class="input"
             placeholder="Введите название"
           />
           <v-text-field
-            variant="plain"
+            variant="solo"
+            flat="true"
             type="number"
             density="comfortable"
             v-model="product.cost"

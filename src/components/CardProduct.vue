@@ -32,7 +32,6 @@ import { defineProps } from "vue";
 
 const productStore = useProductsStore();
 const props = defineProps({product:{type:Object, required:true}})
-
 </script>
   
 <style scoped lang="scss">

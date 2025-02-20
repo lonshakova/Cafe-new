@@ -1,18 +1,21 @@
 <template>
   <div class="start-page" justify-center>
+    <div class="logo" @click="$router.push('/')" title="Перейти на главную">
+      deli / check
+    </div>
     <v-form class="enter-form">
       <v-text-field
         class="login"
         label="Логин"
         type="text"
         required
-        v-model="login"
+        v-model="user.login"
       />
       <v-text-field
         class="password"
         label="Пароль"
         required
-        v-model="password"
+        v-model="user.password"
         :type="isVisible ? 'text' : 'password'"
         :append-inner-icon="isVisible ? 'mdi-eye-off' : 'mdi-eye'"
         @click:append-inner="isVisible = !isVisible"
@@ -35,18 +38,19 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from 'vue-router';
+import { useUsersStore } from "../stores/usersStore";
 
-const router = useRouter();
+const usersStore = useUsersStore();
 
+const user = ref({
+  login: null,
+  password: null,
+})
 let isVisible = ref(false);
-let login = ref("");
-let password = ref("");
-
 
 function enterUser() {
-  if (password.value && login.value) {
-    router.push('/main');
+  if (user.value.password && user.value.login) {
+    usersStore.enterUser(user.value);
   }
 }
 </script>
@@ -54,11 +58,19 @@ function enterUser() {
 <style scoped lang="scss">
 .start-page {
   width: 100%;
-  height: 100%;
-  margin: 50px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.logo {
+  font-size: 10vh;
+  font-weight: 700;
+  color: #148f77;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .btn:hover {
@@ -66,7 +78,7 @@ function enterUser() {
 }
 
 .enter-form {
-  margin: 10px;
+  justify-self: center;
   width: 20vw;
 }
 

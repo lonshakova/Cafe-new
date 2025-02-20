@@ -32,7 +32,7 @@
           class="btn"
           variant="text"
           rounded="xl"
-          @click="$router.push('/')"
+          @click="$router.push('/login')"
           >Назад</v-btn
         >
         <v-btn
