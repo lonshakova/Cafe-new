@@ -5,14 +5,16 @@ export const useProductsStore = defineStore({
   id: "products",
   state: () => ({
     products: [],
-    checks: [
-      
-    ],
+    checks: [],
   }),
   actions: {
     createCard(product) {
       const personsStore = usePersonsStore();
       this.products.push(product);
+      if (product.checkId) {
+        const check = this.checks.find((c) => c.id == product.checkId);
+        check.products.push(product.id);
+      }
       product.cost = +product.cost;
       const totalPrice = product.cost / product.eaters.length;
       for (const person of personsStore.persons) {
@@ -58,6 +60,8 @@ export const useProductsStore = defineStore({
         }
       }
       this.products = this.products.filter((p) => p.id !== product.id);
+      const check = this.checks.find((c) => c.id == product.checkId);
+      check.products = check.products.filter((p) => p !== product.id);
     },
   },
 });

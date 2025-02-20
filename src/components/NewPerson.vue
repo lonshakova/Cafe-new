@@ -44,9 +44,11 @@
 
 <script setup>
 import { usePersonsStore } from "../stores/personsStore";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
 
 const personsStore = usePersonsStore();
+const route = useRoute();
 
 let isVisible = ref(false);
 let person = ref({
@@ -55,8 +57,18 @@ let person = ref({
   creditors: [],
 });
 
+const personsList = computed(()=>{
+  let pers=[];
+  if (!route.params.id){
+    return [];
+  }
+})
+
 function addPerson() {
       person.value.id = Date.now();
+      if (route.params.id){
+        person.value.checkId = route.params.id;
+      }
       personsStore.addPerson(person.value);
       person.value = {
         name: "",
@@ -68,10 +80,10 @@ function addPerson() {
 
 <style scoped lang="scss">
 .main-btn {
-  width: 300px;
+  width: 15vw;
   min-height: 70px;
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 500;
+  font-size: 1vw;
   border: 1px #148f77 solid;
   border-radius: 15px;
   &:hover {

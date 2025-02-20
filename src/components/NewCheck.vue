@@ -27,9 +27,10 @@
 <script setup>
 import { ref } from "vue";
 import { useProductsStore } from "../stores/productStore";
-
+import { useRouter } from "vue-router";
 
 const productStore = useProductsStore();
+const router = useRouter();
 
 const isVisible = ref(false);
 const check = ref({ name: "", id: null, products: [], persons: [] });
@@ -37,6 +38,7 @@ const check = ref({ name: "", id: null, products: [], persons: [] });
 function addnewCheck() {
   check.value.id = Date.now();
   productStore.checks.push(check.value);
+  router.push(`/main/${check.value.id}`);
   check.value = { name: "", id: null, products: [], persons: [] };
   isVisible.value = false;
 }

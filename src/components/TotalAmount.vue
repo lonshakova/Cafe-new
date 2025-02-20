@@ -43,10 +43,10 @@ let amount = computed(() => {
 
 <style scoped lang="scss">
 .main-btn {
-  width: 300px;
+  width: 15vw;
   min-height: 70px;
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 500;
+  font-size: 1vw;
   border: 1px #148f77 solid;
   border-radius: 15px;
   &:hover {

@@ -68,6 +68,9 @@
 import { usePersonsStore } from "../stores/personsStore";
 import { useProductsStore } from "../stores/productStore";
 import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 const personsStore = usePersonsStore();
 const productStore = useProductsStore();
 
@@ -90,6 +93,9 @@ let formIsEmpty = computed(() => {
 
 function createCard() {
   product.value.id = Date.now();
+  if (route.params.id){
+    product.value.checkId = route.params.id;
+  }
   productStore.createCard(product.value);
   product.value = {
     name: "",
@@ -102,10 +108,10 @@ function createCard() {
 
 <style scoped lang="scss">
 .main-btn {
-  width: 300px;
+  width: 15vw;
   min-height: 70px;
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 500;
+  font-size: 1vw;
   border: 1px #148f77 solid;
   border-radius: 15px;
   &:hover {
