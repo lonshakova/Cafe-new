@@ -1,15 +1,15 @@
 <template>
-    <div class="card-list">
-      <transition-group 
-      name="card-list" 
-      v-for="product in productList" 
-      :key="product.id">
-        <card-product :product="product" :key="product.id" />
-      </transition-group>
-      {{ productList }}
-    </div>
+  <div class="card-list">
+    <transition-group
+      name="card-list"
+      v-for="product in productList"
+      :key="product.id"
+    >
+      <card-product :product="product" :key="product.id" />
+    </transition-group>
+  </div>
 </template>
-  
+
 <script setup>
 import CardProduct from "./CardProduct.vue";
 import { useProductsStore } from "../stores/productStore";
@@ -19,19 +19,19 @@ import { useRoute } from "vue-router";
 const productStore = useProductsStore();
 const route = useRoute();
 
-const productList = computed(()=>{
-  let prods =[];
-  if (!route.params.id){
-    return []
+const productList = computed(() => {
+  let prods = [];
+  if (!route.params.id) {
+    return productStore.products.filter((p) => p.checkId == 0);
   }
-  const check = productStore.checks.find((ch)=>ch.id == route.params.id)
-  for (let prodId of check.products){
-    prods.push(productStore.products.find((p)=>p.id==prodId))
+  const check = productStore.checks.find((ch) => ch.id == route.params.id);
+  for (let prodId of check.products) {
+    prods.push(productStore.products.find((p) => p.id == prodId));
   }
-  return prods
-})
+  return prods;
+});
 </script>
-  
+
 <style scoped>
 .card-list {
   min-width: 1020px;

@@ -8,13 +8,16 @@
     <v-navigation-drawer v-model="isVisible" class="side-menu">
       <div class="top">
         <v-app-bar-nav-icon
-        variant="text"
-        @click.stop="isVisible = !isVisible"
-      />
-      <NewCheck />
-      <GoOut v-if="usersStore.isEntered"/> 
-      <v-btn v-else class="btn" @click="$router.push('/login')" variant="flat">Вход</v-btn>
+          variant="text"
+          @click.stop="isVisible = !isVisible"
+        />
+        <NewCheck />
+        <GoOut v-if="usersStore.isEntered" />
+        <v-btn v-else class="btn" @click="$router.push('/login')" variant="flat"
+          >Вход</v-btn
+        >
       </div>
+      <div v-if="!usersStore.isEntered" class="warning">Войдите, чтобы добавить или сохранить чек</div>
       <v-list class="checks">
         <v-list-item
           v-for="check in productStore.checks"
@@ -49,8 +52,6 @@ let isVisible = ref(false);
 function deleteItem(id) {
   productStore.checks = productStore.checks.filter((p) => p.id !== id);
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -72,6 +73,12 @@ function deleteItem(id) {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.warning{
+  font-size: x-large;
+  font-weight: 700;
+  text-align: center;
 }
 
 .check {

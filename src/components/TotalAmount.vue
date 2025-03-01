@@ -55,6 +55,8 @@ let amount = computed(() => {
 }
 
 .total-amount {
+  min-width: 20vw;
+  min-height: 20vh;
   padding: 10px;
   text-align: center;
   background: #eafaf1;

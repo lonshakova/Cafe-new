@@ -27,8 +27,8 @@ let isVisible = ref(false);
 <style lang="scss" scoped>
 .main-window {
   padding: 10px;
-  width: 20vw;
-  height: 20vh;
+  min-width: 20vw;
+  min-height: 20vh;
   background-color: #eafaf1;
   display: flex;
   flex-direction: column;

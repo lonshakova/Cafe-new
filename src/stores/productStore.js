@@ -11,7 +11,7 @@ export const useProductsStore = defineStore({
     createCard(product) {
       const personsStore = usePersonsStore();
       this.products.push(product);
-      if (product.checkId) {
+      if (product.checkId !== 0) {
         const check = this.checks.find((c) => c.id == product.checkId);
         check.products.push(product.id);
       }
@@ -39,6 +39,7 @@ export const useProductsStore = defineStore({
         }
       }
     },
+
     removeCard(product) {
       const personsStore = usePersonsStore();
       const totalPrice = product.cost / product.eaters.length;
@@ -60,8 +61,10 @@ export const useProductsStore = defineStore({
         }
       }
       this.products = this.products.filter((p) => p.id !== product.id);
-      const check = this.checks.find((c) => c.id == product.checkId);
-      check.products = check.products.filter((p) => p !== product.id);
+      if (product.checkId !== 0) {
+        const check = this.checks.find((c) => c.id == product.checkId);
+        check.products = check.products.filter((p) => p !== product.id);
+      }
     },
   },
 });

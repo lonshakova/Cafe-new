@@ -8,9 +8,10 @@
         <v-form class="input-name">
           <v-text-field
             variant="solo"
-            flat="true"
+            flat
             v-model="check.name"
             density="comfortable"
+            :rounded="true"
             class="input"
             placeholder="Введите название"
           />
@@ -26,9 +27,11 @@
 <script setup>
 import { ref } from "vue";
 import { useProductsStore } from "../stores/productStore";
+import { useUsersStore } from "../stores/usersStore";
 import { useRouter } from "vue-router";
 
 const productStore = useProductsStore();
+const usersStore = useUsersStore();
 const router = useRouter();
 
 const isVisible = ref(false);

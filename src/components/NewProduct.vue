@@ -8,17 +8,19 @@
         <v-form class="input-product">
           <v-text-field
             variant="solo"
-            flat="true"
+            flat
             v-model="product.name"
             density="comfortable"
+            :rounded="true"
             class="input"
             placeholder="Введите название"
           />
           <v-text-field
             variant="solo"
-            flat="true"
+            flat
             type="number"
             density="comfortable"
+            :rounded="true"
             v-model="product.cost"
             class="input"
             placeholder="Введите цену"
@@ -98,6 +100,9 @@ function createCard() {
   if (route.params.id){
     product.value.checkId = route.params.id;
   }
+  else {
+    product.value.checkId = 0;
+  }
   productStore.createCard(product.value);
   product.value = {
     name: "",
@@ -134,11 +139,10 @@ function createCard() {
   align-items: center;
   justify-content: space-around;
   flex-direction: row;
+  gap:10px;
 }
 
 .input {
-  margin: 0px 10px;
-  padding-left: 10px;
   width: 100px;
   background: #ffffff;
   max-height: 50px;

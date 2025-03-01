@@ -8,15 +8,21 @@ export const usePersonsStore = defineStore({
     addPerson(person) {
       const productStore = useProductsStore();
       this.persons.push(person);
-      let check = productStore.checks.find((ch) => ch.id == person.checkId);
-      check.persons.push(person.id);
+      if (person.checkId !== 0) {
+        let check = productStore.checks.find((ch) => ch.id == person.checkId);
+        check.persons.push(person.id);
+      }
     },
+
     deletePerson(person) {
       const productStore = useProductsStore();
       this.persons = this.persons.filter((p) => p.id !== person.id);
-      let check = productStore.checks.find((ch) => ch.id == person.checkId);
-      check.persons = check.persons.filter((p) => p !== person.id);
+      if (person.checkId !== 0) {
+        let check = productStore.checks.find((ch) => ch.id == person.checkId);
+        check.persons = check.persons.filter((p) => p !== person.id);
+      }
     },
+
     removeRepetitions() {
       for (const person1 of this.persons) {
         for (const person2 of this.persons) {

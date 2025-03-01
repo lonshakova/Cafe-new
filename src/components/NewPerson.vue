@@ -14,10 +14,11 @@
         <v-form class="input-person">
           <v-text-field
             variant="solo"
-            flat="true"
+            flat
             v-model="person.name"
             placeholder="Введите имя"
             density="comfortable"
+            :rounded="true"
             class="name"
           />
           <v-btn text="Добавить" id="name-btn" class="btn" @click="addPerson" />
@@ -69,6 +70,9 @@ function addPerson() {
       person.value.id = Date.now();
       if (route.params.id){
         person.value.checkId = route.params.id;
+      }
+      else {
+        person.value.checkId = 0;
       }
       personsStore.addPerson(person.value);
       person.value = {
