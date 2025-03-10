@@ -1,44 +1,72 @@
 <template>
-    <v-dialog v-model="isVisible" width="auto" scrollable>
-      <template v-slot:activator="{ props }">
-        <v-btn icon="mdi-plus" variant="text" v-bind="props" />
-      </template>
-      <v-card class="main-window">
-        <v-card-title>Добавить новый чек</v-card-title>
-        <v-form class="input-name">
-          <v-text-field
-            variant="solo"
-            flat
-            v-model="check.name"
-            density="comfortable"
-            :rounded="true"
-            class="input"
-            placeholder="Введите название"
-          />
-        </v-form>
-        <div class="btns">
-          <v-btn class="btn" @click="isVisible = false">Отмена</v-btn>
-          <v-btn class="btn" @click="addnewCheck()">Добавить чек</v-btn>
-        </div>
-      </v-card>
-    </v-dialog>
+  <v-dialog v-model="isVisible" width="auto" scrollable>
+    <template v-slot:activator="{ props }">
+      <v-btn
+        v-if="btnType == 'add'"
+        icon="mdi-plus"
+        variant="text"
+        v-bind="props"
+      />
+      <v-btn v-if="btnType == 'save'" variant="flat" v-bind="props">Сохранить чек</v-btn>
+    </template>
+    <v-card class="main-window">
+      <v-card-title>Добавить новый чек</v-card-title>
+      {{ usersStore.isEntered }}
+      <v-form class="input-name">
+        <v-text-field
+          variant="solo"
+          flat
+          v-model="check.name"
+          density="comfortable"
+          :rounded="true"
+          class="input"
+          placeholder="Введите название"
+        />
+      </v-form>
+      <div class="btns">
+        <v-btn class="btn" @click="isVisible = false">Отмена</v-btn>
+        <v-btn class="btn" @click="addnewCheck()">Добавить чек</v-btn>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useProductsStore } from "../stores/productStore";
 import { useUsersStore } from "../stores/usersStore";
+import { usePersonsStore } from "../stores/personsStore";
 import { useRouter } from "vue-router";
+import { defineProps } from "vue";
 
 const productStore = useProductsStore();
 const usersStore = useUsersStore();
 const router = useRouter();
+const personsStore = usePersonsStore();
 
 const isVisible = ref(false);
 const check = ref({ name: "", id: null, products: [], persons: [] });
 
+const props = defineProps({
+  btnType: { type: String, required: true },
+});
+
 function addnewCheck() {
   check.value.id = Date.now();
+  if (props.btnType == "save") {
+    for (let product of productStore.products) {
+      if (product.checkId == 0) {
+        check.products.push(product.id);
+        product.checkId = check.value.id;
+      }
+    }
+    for (let person of personsStore.persons) {
+      if (person.checkId == 0) {
+        check.persons.push(person.id);
+        person.checkId = check.value.id;
+      }
+    }
+  }
   productStore.checks.push(check.value);
   router.push(`/${check.value.id}`);
   check.value = { name: "", id: null, products: [], persons: [] };

@@ -26,7 +26,7 @@
         <div
           lines
           class="name-list"
-          v-for="person in personsStore.persons"
+          v-for="person in personsList"
           :key="person.id"
         >
           <v-list-item class="names">{{ person.name }}</v-list-item>
@@ -60,10 +60,10 @@ let person = ref({
 });
 
 const personsList = computed(()=>{
-  let pers=[];
   if (!route.params.id){
-    return [];
+    return personsStore.persons.filter((p)=>p.checkId == 0);
   }
+  return personsStore.persons.filter((p)=>p.checkId == route.params.id);
 })
 
 function addPerson() {

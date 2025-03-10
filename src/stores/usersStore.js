@@ -29,24 +29,42 @@ export const useUsersStore = defineStore({
     ],
   }),
   actions: {
-    enterUser(user) {
-      for (let us of this.users) {
-        if (user.login === us.login && user.password === us.password) {
-          this.enteredUser = us;
+    async enterUser(user) {
+      fetch("http://localhost:1337/api/auth/local", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier: user.login,
+          password: user.password,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
           this.isEntered = true;
+          window.localStorage.setItem("userToken", data.jwt);
+          this.enteredUser = data.user;
           this.router.push("/");
-        }
-      }
+        })
+        .catch((error) => {
+          console.error("Ошибка авторизации:", error);
+        });
     },
 
-    goOut(){
+    goOut() {
       this.isEntered = false;
       this.enteredUser = {
         id: null,
         login: "",
         password: "",
-      }
+      };
       this.router.push("/");
-    }
+    },
   },
 });
