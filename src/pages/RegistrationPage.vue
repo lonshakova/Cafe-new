@@ -5,7 +5,7 @@
         class="login"
         label="Логин"
         type="text"
-        v-model="login"
+        v-model="user.login"
         :rules="[rules.required]"
       />
       <v-text-field
@@ -16,7 +16,7 @@
         :type="isVisible ? 'text' : 'password'"
         :append-inner-icon="isVisible ? 'mdi-eye-off' : 'mdi-eye'"
         @click:append-inner="isVisible = !isVisible"
-        v-model="password"
+        v-model="user.password"
       />
       <v-text-field
         class="password"
@@ -35,11 +35,7 @@
           @click="$router.push('/login')"
           >Назад</v-btn
         >
-        <v-btn
-          class="btn"
-          variant="text"
-          rounded="xl"
-          @click="registUser()"
+        <v-btn class="btn" variant="text" rounded="xl" @click="registUser()"
           >Регистрация</v-btn
         >
       </div>
@@ -50,24 +46,32 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useUsersStore } from "../stores/usersStore";
 
 const router = useRouter();
+const usersStore = useUsersStore();
 
+let isVisible = ref(false);
+let isVisibleRep = ref(false);
+const user = ref({
+  login: "",
+  password: "",
+});
+let repPassword = ref("");
 let rules = ref({
   required: (value) => !!value || "Обязательно для заполнения",
   min: (v) => v.length >= 8 || "Минимум 8 символов",
   repeatMatch: () =>
-    !!(password.value == repPassword.value) || "Пароли не совпадают",
+    !!(user.value.password == repPassword.value) || "Пароли не совпадают",
 });
-let isVisible = ref(false);
-let isVisibleRep = ref(false);
-let login = ref("");
-let password = ref("");
-let repPassword = ref("");
 
 function registUser() {
-  if (password.value && login.value && repPassword.value == password.value) {
-    router.push('/main');
+  if (
+    user.value.password &&
+    user.value.login &&
+    repPassword.value == user.value.password
+  ) {
+    usersStore.registUser(user.value);
   }
 }
 </script>

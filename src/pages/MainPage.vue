@@ -22,6 +22,7 @@ import NewPerson from "../components/NewPerson.vue";
 import NewProduct from "../components/NewProduct.vue";
 import TotalAmount from "../components/TotalAmount.vue";
 import SideMenu from "../components/SideMenu.vue";
+
 </script>
 
 <style scoped lang="scss">

@@ -5,30 +5,25 @@ export const useUsersStore = defineStore({
   id: "users",
   state: () => ({
     isEntered: false,
-    enteredUser: {
-      id: null,
-      login: "",
-      password: "",
-    },
-    users: [
-      {
-        id: 5664,
-        login: "donat.b@boris.com",
-        password: "12345678",
-      },
-      {
-        id: 4553,
-        login: "irish_kish@kish.ru",
-        password: "11111111",
-      },
-      {
-        id: 3442,
-        login: "nepishi@ire.com",
-        password: "22222222",
-      },
-    ],
+    idUser: null,
+    checks: [],
   }),
   actions: {
+    parseJwt(token) {
+      if (!token) {
+        return null;
+      }
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const padding = "=".repeat((4 - (base64.length % 4)) % 4);
+      const base64WithPadding = base64 + padding;
+      const decodedString = window.atob(base64WithPadding);
+      const decodedBytes = new TextDecoder("utf-8").decode(
+        new Uint8Array([...decodedString].map((char) => char.charCodeAt(0)))
+      );
+      return JSON.parse(decodedBytes);
+    },
+
     async enterUser(user) {
       fetch("http://localhost:1337/api/auth/local", {
         method: "POST",
@@ -49,7 +44,8 @@ export const useUsersStore = defineStore({
         .then((data) => {
           this.isEntered = true;
           window.localStorage.setItem("userToken", data.jwt);
-          this.enteredUser = data.user;
+          this.idUser = data.user.id;
+          this.getUserChecks();
           this.router.push("/");
         })
         .catch((error) => {
@@ -57,14 +53,54 @@ export const useUsersStore = defineStore({
         });
     },
 
+    async registUser(user) {
+      fetch("http://localhost:1337/api/auth/local/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.login,
+          email: user.login,
+          password: user.password,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          this.isEntered = true;
+          window.localStorage.setItem("userToken", data.jwt);
+          this.idUser = data.user.id;
+          this.router.push("/");
+        })
+        .catch((error) => {
+          console.error("Ошибка регистрации:", error);
+        });
+    },
+
     goOut() {
       this.isEntered = false;
-      this.enteredUser = {
-        id: null,
-        login: "",
-        password: "",
-      };
+      this.idUser = null;
+      window.localStorage.removeItem("userToken");
+      this.checks = [];
       this.router.push("/");
+    },
+
+    async getUserChecks() {
+      fetch(`http://localhost:1337/api/users/${this.idUser}?populate=checks`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          this.checks =data.checks;
+        })
     },
   },
 });
