@@ -23,7 +23,7 @@
       </div>
       <v-list class="checks">
         <v-list-item
-          v-for="check in productStore.checks"
+          v-for="check in usersStore.checks"
           :value="check"
           :key="check.id"
           class="check"

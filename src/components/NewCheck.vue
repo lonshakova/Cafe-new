@@ -11,7 +11,6 @@
     </template>
     <v-card class="main-window">
       <v-card-title>Добавить новый чек</v-card-title>
-      {{ usersStore.isEntered }}
       <v-form class="input-name">
         <v-text-field
           variant="solo"
@@ -67,7 +66,8 @@ function addnewCheck() {
       }
     }
   }
-  productStore.checks.push(check.value);
+  usersStore.checks.push(check.value);
+  usersStore.addCheck(check.value);
   router.push(`/${check.value.id}`);
   check.value = { name: "", id: null, products: [], persons: [] };
   isVisible.value = false;

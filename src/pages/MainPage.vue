@@ -11,7 +11,7 @@
       </v-container>
     </div>
     <v-main>
-      <card-list />
+      <CardList />
     </v-main>
   </v-app>
 </template>

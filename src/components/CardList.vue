@@ -13,10 +13,12 @@
 <script setup>
 import CardProduct from "./CardProduct.vue";
 import { useProductsStore } from "../stores/productStore";
+import { useUsersStore } from "../stores/usersStore";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 const productStore = useProductsStore();
+const usersStore = useUsersStore()
 const route = useRoute();
 
 const productList = computed(() => {
@@ -24,7 +26,7 @@ const productList = computed(() => {
   if (!route.params.id) {
     return productStore.products.filter((p) => p.checkId == 0);
   }
-  const check = productStore.checks.find((ch) => ch.id == route.params.id);
+  const check = usersStore.checks.find((ch) => ch.id == route.params.id);
   for (let prodId of check.products) {
     prods.push(productStore.products.find((p) => p.id == prodId));
   }

@@ -99,8 +99,41 @@ export const useUsersStore = defineStore({
           return response.json();
         })
         .then((data) => {
-          this.checks =data.checks;
+          this.checks = data.checks;
         })
+        .catch((error) => {
+          console.error("Ошибка загрузки чеков:", error);
+        });
+    },
+
+    async addCheck(check) {
+      const stringId = String(this.idUser);
+      fetch("http://localhost:1337/api/checks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            name: check.name,
+            products: check.products,
+            persons: check.persons,
+            user_id: stringId,
+          },
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Ошибка добавления чека:", error);
+        });
     },
   },
 });
