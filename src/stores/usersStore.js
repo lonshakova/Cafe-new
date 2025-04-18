@@ -91,7 +91,12 @@ export const useUsersStore = defineStore({
     },
 
     async getUserChecks() {
-      fetch(`http://localhost:1337/api/users/${this.idUser}?populate=checks`)
+      fetch(
+        `http://localhost:1337/api/checks?` +
+          `filters[user][id][$eq]=${this.idUser}&` +
+          `populate[products][populate]=*&` +
+          `populate[persons][populate]`
+      )
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Ошибка: ${response.status}`);
@@ -99,7 +104,8 @@ export const useUsersStore = defineStore({
           return response.json();
         })
         .then((data) => {
-          this.checks = data.checks;
+          this.checks = data.data;
+          console.log(this.checks);
         })
         .catch((error) => {
           console.error("Ошибка загрузки чеков:", error);
@@ -118,7 +124,7 @@ export const useUsersStore = defineStore({
             name: check.name,
             products: check.products,
             persons: check.persons,
-            user_id: stringId,
+            user: stringId,
           },
         }),
       })
@@ -129,10 +135,26 @@ export const useUsersStore = defineStore({
           return response.json();
         })
         .then((data) => {
-          console.log(data);
+          check.id = data.data.id;
+          this.router.push(`/${check.id}`);
         })
         .catch((error) => {
           console.error("Ошибка добавления чека:", error);
+        });
+    },
+
+    async removeCheck(checkId) {
+      fetch(`http://localhost:1337/api/checks/${checkId}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+          }
+          return response;
+        })
+        .catch((error) => {
+          console.error("Ошибка удаления чека:", error);
         });
     },
   },

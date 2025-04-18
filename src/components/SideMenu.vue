@@ -55,8 +55,9 @@ const router = useRouter();
 let isVisible = ref(false);
 
 function deleteItem(id) {
-  productStore.checks = productStore.checks.filter((c) => c.id !== id);
+  usersStore.checks = usersStore.checks.filter((c) => c.id !== id);
   productStore.products = productStore.products.filter((p) => p.checkId !== id);
+  usersStore.removeCheck(id);
 }
 
 function goToCheck(id) {

@@ -51,7 +51,6 @@ const props = defineProps({
 });
 
 function addnewCheck() {
-  check.value.id = Date.now();
   if (props.btnType == "save") {
     for (let product of productStore.products) {
       if (product.checkId == 0) {
@@ -68,7 +67,6 @@ function addnewCheck() {
   }
   usersStore.checks.push(check.value);
   usersStore.addCheck(check.value);
-  router.push(`/${check.value.id}`);
   check.value = { name: "", id: null, products: [], persons: [] };
   isVisible.value = false;
 }

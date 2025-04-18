@@ -2,11 +2,13 @@
   <div class="card-list">
     <transition-group
       name="card-list"
-      v-for="product in productList"
+      v-for="product in check.products"
       :key="product.id"
+      v-if="check"
     >
       <card-product :product="product" :key="product.id" />
     </transition-group>
+    {{ check }}
   </div>
 </template>
 
@@ -14,23 +16,28 @@
 import CardProduct from "./CardProduct.vue";
 import { useProductsStore } from "../stores/productStore";
 import { useUsersStore } from "../stores/usersStore";
-import { computed } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import { useRoute } from "vue-router";
 
 const productStore = useProductsStore();
-const usersStore = useUsersStore()
+const usersStore = useUsersStore();
 const route = useRoute();
 
+let check = computed(() =>
+  usersStore.checks.find((ch) => ch.id == route.params.id)
+);
+
 const productList = computed(() => {
-  let prods = [];
+  console.log(check);
   if (!route.params.id) {
-    return productStore.products.filter((p) => p.checkId == 0);
+    //return productStore.products.filter((p) => p.checkId == 0);
+    return [];
   }
-  const check = usersStore.checks.find((ch) => ch.id == route.params.id);
-  for (let prodId of check.products) {
-    prods.push(productStore.products.find((p) => p.id == prodId));
-  }
-  return prods;
+  return check.value.products;
+});
+
+onBeforeMount(() => {
+  //check.value = usersStore.checks.find((ch) => ch.id == route.params.id);
 });
 </script>
 

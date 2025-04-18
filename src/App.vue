@@ -5,10 +5,12 @@
 </template>
 
 <script setup>
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import { useUsersStore } from './stores/usersStore';
+import { useRoute } from 'vue-router';
 
 const usersStore = useUsersStore();
+const route = useRoute();
 
 onBeforeMount(()=>{
   const userToken = window.localStorage.getItem("userToken");
